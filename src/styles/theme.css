@@ -1,0 +1,18 @@
+:root {
+  /* Base colors */
+  --color-primary: #4f46e5;
+  --color-success: #16a34a;
+  --color-danger: #dc2626;
+  --color-default: #64748b;
+
+  /* Hover variants */
+  --color-primary-hover: #6366f1;
+  --color-success-hover: #22c55e;
+  --color-danger-hover: #ef4444;
+  --color-default-hover: #94a3b8;
+
+  /* UI */
+  --text-color: #ffffff;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

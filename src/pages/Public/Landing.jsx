@@ -1,8 +1,16 @@
 import React from 'react'
+import Button from '../../components/Botton/Button'
 
 const Landing = () => {
   return (
-    <a href="">asdfasdf</a>
+    <>
+    <Button type="Save">
+      Login
+    </Button>
+    <Button>
+      Logout
+    </Button>
+    </>
   )
 }
 

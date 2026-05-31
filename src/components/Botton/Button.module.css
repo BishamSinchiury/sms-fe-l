@@ -1,0 +1,28 @@
+.button{
+    height: 30px;
+    width: 70px;
+    border-radius: 15px;
+}
+.save {
+  background: var(--color-success)
+}
+
+.save:hover {
+  background: var(--color-success-hover)
+}
+
+.delete {
+  background: var(--color-danger)
+}
+
+.delete:hover {
+  background: var(--color-danger-hover)
+}
+
+.default {
+  background: var(--color-default)
+}
+
+.default:hover {
+  background: var(--color-default-hover)
+}

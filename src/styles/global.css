@@ -1,10 +1,17 @@
+/* Box sizing */
 *,
 *::before,
-*::after{
-    margin: 0;
-    padding: 0;
+*::after {
+  box-sizing: border-box;
 }
-a{
-    text-decoration: none;
-    color:red;
+
+/* Remove default margins */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Improve text rendering */
+html {
+  scroll-behavior: smooth;
 }
