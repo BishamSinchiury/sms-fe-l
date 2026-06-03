@@ -1,7 +1,27 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import Button from '../../components/Botton/Button'
 
+
+
 const Landing = () => {
+  const API_URL = import.meta.env.VITE_API_BASE_URL
+  const [data, setData] = useState(null);
+  const domain = window.location.hostname;
+
+
+  useEffect(()=> {
+    const makeReq = async () => {
+    const response = await fetch(`${API_URL}/org/public/organization?domain_name=${domain}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const data = await response.json();
+  }
+  console.log(domain)
+  makeReq();
+  }, []);
   return (
     <>
       <h1>Company Name</h1>
