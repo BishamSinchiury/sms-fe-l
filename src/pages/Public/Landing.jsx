@@ -1,35 +1,48 @@
-import React, {useEffect, useState} from 'react'
-import Button from '../../components/Botton/Button'
-
-
+import React from "react";
+import Button from "@/components/Button/Button";
+import Notify from "@/components/Modal/Notify";
+import { useOrg } from "@/context/OrgContext";
+import styles from "./Landing.module.css";
+import Navbar from "@/components/HomeNav/HomeNav";
+import About from "@/pages/Public/About/About";
+import Courses from "@/pages/Public/Courses/Courses";
+import Contact from "@/pages/Public/Contact/Contact";
+import { useNavigate } from "react-router-dom";
 
 const Landing = () => {
-  const API_URL = import.meta.env.VITE_API_BASE_URL
-  const [data, setData] = useState(null);
-  const domain = window.location.hostname;
+  const { org, loading, error } = useOrg();
+  const navigate = useNavigate();
 
 
-  useEffect(()=> {
-    const makeReq = async () => {
-    const response = await fetch(`${API_URL}/org/public/organization?domain_name=${domain}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
-  }
-  console.log(domain)
-  makeReq();
-  }, []);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <Notify message={error} />;
+
   return (
-    <>
-      <h1>Company Name</h1>
-      <h3>Company Adrress</h3>
-      <h6>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae fugit optio excepturi architecto cum est quae sapiente dolorem culpa. Neque, deserunt. Sunt deserunt totam reprehenderit excepturi repellat, adipisci possimus repellendus?</h6>
-      <Button>Learn More</Button>
-    </>
-  )
-}
+    <div className={styles.page}>
+      <Navbar />
+      <div
+        className={styles.heroBg}
+        style={{ backgroundImage: `url(${org?.cover_picture})` }}
+      />
+      <div className={styles.heroContent}>
+        <div className={styles.logoContainer}>
+          {org?.logo && (
+            <img src={org.logo} alt={`${org.name} logo`} className={styles.logo} />
+          )}
+        </div>
+        <h1>{org?.name ?? "School Name"}</h1>
+        <h3>{org?.address ?? "Address"}</h3>
+        <h4>{org?.motto ?? ""}</h4>
+        <Button onClick={() => navigate('/login')}>Get Started</Button>
+      </div>
 
-export default Landing
+      <div className={styles.pageBody}>
+        <About />
+        <Courses />
+        <Contact />
+      </div>
+    </div>
+  );
+};
+
+export default Landing;

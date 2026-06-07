@@ -1,0 +1,13 @@
+// ADD:
+// Then somewhere in your React app — probably a top-level layout component — you listen for it:
+// javascriptuseEffect(() => {
+//   const handleForbidden = () => {
+//     // set your modal open state here
+//     setPermissionDeniedOpen(true);
+//   };
+
+//   window.addEventListener("forbidden", handleForbidden);
+
+//   // Cleanup when the component unmounts
+//   return () => window.removeEventListener("forbidden", handleForbidden);
+// }, []);

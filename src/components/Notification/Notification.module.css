@@ -1,0 +1,111 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+
+.toast {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1rem 1rem 1.25rem;
+  border-radius: var(--radius);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  min-width: 280px;
+  max-width: 380px;
+  overflow: hidden;
+  animation: slideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+/* Types */
+.success { background: #f0fdf4; border-left: 4px solid var(--color-success); color: #14532d; }
+.error   { background: #fef2f2; border-left: 4px solid var(--color-danger);  color: #7f1d1d; }
+.warning { background: #fffbeb; border-left: 4px solid #f59e0b;              color: #78350f; }
+.info    { background: #eff6ff; border-left: 4px solid var(--color-primary); color: #1e3a8a; }
+
+.iconWrap {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+}
+
+.success .iconWrap { color: var(--color-success); }
+.error   .iconWrap { color: var(--color-danger); }
+.warning .iconWrap { color: #f59e0b; }
+.info    .iconWrap { color: var(--color-primary); }
+
+.body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.message {
+  font-weight: 400;
+  opacity: 0.85;
+  line-height: 1.5;
+}
+
+.action {
+  align-self: flex-start;
+  margin-top: 0.5rem;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  opacity: 0.9;
+}
+
+.success .action { color: var(--color-success); }
+.error   .action { color: var(--color-danger); }
+.warning .action { color: #d97706; }
+.info    .action { color: var(--color-primary); }
+
+.close {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  opacity: 0.4;
+  padding: 0;
+  transition: opacity 0.2s;
+}
+.close:hover { opacity: 0.8; }
+
+/* Progress bar */
+.progress {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  animation: shrink linear forwards;
+  transform-origin: left;
+}
+
+.success .progress { background: var(--color-success); }
+.error   .progress { background: var(--color-danger); }
+.warning .progress { background: #f59e0b; }
+.info    .progress { background: var(--color-primary); }
+
+@keyframes shrink {
+  from { transform: scaleX(1); }
+  to   { transform: scaleX(0); }
+}
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(40px); }
+  to   { opacity: 1; transform: translateX(0); }
+}

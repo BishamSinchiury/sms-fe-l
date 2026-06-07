@@ -1,0 +1,294 @@
+/* ── Page ───────────────────────────────────────────── */
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+  font-family: 'DM Sans', sans-serif;
+  background: #0a0a0f;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Background ──────────────────────────────────────── */
+.bg { position: absolute; inset: 0; pointer-events: none; }
+
+.blob1 {
+  position: absolute;
+  top: -120px; left: -120px;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79,70,229,0.3) 0%, transparent 70%);
+  filter: blur(60px);
+  animation: drift 8s ease-in-out infinite alternate;
+}
+
+.blob2 {
+  position: absolute;
+  bottom: -100px; right: -80px;
+  width: 360px; height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(99,102,241,0.18) 0%, transparent 70%);
+  filter: blur(50px);
+  animation: drift 10s ease-in-out infinite alternate-reverse;
+}
+
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, 20px) scale(1.08); }
+}
+
+/* ── Card ────────────────────────────────────────────── */
+.card {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: 24px;
+  padding: 2.5rem 2rem;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 32px 80px rgba(0,0,0,0.5);
+  animation: cardIn 0.55s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(28px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Header ──────────────────────────────────────────── */
+.header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.badge {
+  width: 56px; height: 56px;
+  margin: 0 auto 1rem;
+  background: rgba(79,70,229,0.18);
+  border: 1px solid rgba(79,70,229,0.35);
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.6rem;
+}
+
+.header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.85rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 0.4rem;
+}
+
+.header p {
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.4);
+  margin: 0;
+}
+
+/* ── Form ────────────────────────────────────────────── */
+.form { display: flex; flex-direction: column; gap: 1.1rem; }
+
+.field { display: flex; flex-direction: column; gap: 0.4rem; }
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.field label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+}
+
+.inputWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.inputIcon {
+  position: absolute;
+  left: 0.9rem;
+  width: 16px; height: 16px;
+  color: rgba(255,255,255,0.22);
+  pointer-events: none;
+}
+
+.inputWrap input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 0.75rem 2.8rem 0.75rem 2.6rem;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.95rem;
+  color: #fff;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.inputWrap input::placeholder { color: rgba(255,255,255,0.18); }
+
+.inputWrap input:focus {
+  border-color: var(--color-primary);
+  background: rgba(79,70,229,0.08);
+}
+
+.eyeBtn {
+  position: absolute;
+  right: 0.9rem;
+  width: 18px; height: 18px;
+  background: none; border: none;
+  cursor: pointer;
+  color: rgba(255,255,255,0.28);
+  padding: 0;
+  transition: color 0.2s;
+}
+.eyeBtn:hover { color: rgba(255,255,255,0.7); }
+
+.forgotBtn {
+  background: none; border: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.32);
+  cursor: pointer;
+  padding: 0;
+  transition: color 0.2s;
+}
+.forgotBtn:hover { color: var(--color-primary-hover); }
+
+/* ── Submit ──────────────────────────────────────────── */
+.submit {
+  margin-top: 0.4rem;
+  width: 100%;
+  padding: 0.85rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--color-primary);
+  color: var(--text-color);
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+  box-shadow: var(--shadow);
+}
+
+.submit:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 28px rgba(79,70,229,0.45);
+}
+
+.submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ── Spinner ─────────────────────────────────────────── */
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Divider ─────────────────────────────────────────── */
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 1.5rem 0 0;
+  color: rgba(255,255,255,0.2);
+  font-size: 0.8rem;
+}
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+}
+
+/* ── Admin button ────────────────────────────────────── */
+.adminBtn {
+  width: 100%;
+  margin-top: 0.75rem;
+  padding: 0.8rem;
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  color: rgba(255,255,255,0.55);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+  transition: all 0.2s ease;
+}
+
+.adminBtn svg { width: 16px; height: 16px; }
+
+.adminBtn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary-hover);
+  background: rgba(79,70,229,0.08);
+}
+
+/* ── Footer ──────────────────────────────────────────── */
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: rgba(255,255,255,0.3);
+}
+
+.footerLink {
+  color: var(--color-primary-hover);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.footerLink:hover { color: #fff; }
+
+/* ── Back to home ────────────────────────────────────── */
+.backHome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.22);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.backHome svg { width: 14px; height: 14px; }
+.backHome:hover { color: rgba(255,255,255,0.55); }
+
+/* ── Mobile ──────────────────────────────────────────── */
+@media (max-width: 480px) {
+  .card { padding: 2rem 1.25rem; border-radius: 20px; }
+  .header h1 { font-size: 1.55rem; }
+}

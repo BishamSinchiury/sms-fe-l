@@ -1,11 +1,16 @@
-import React from 'react';
-import styles from './Button.module.css';
+import React from "react";
+import styles from "./Button.module.css";
 
-const Button = ({ type, children, onClick }) => {
+const Button = ({
+  type = "Default",
+  children,
+  onClick,
+  disabled = false,
+}) => {
   const typeClass =
-    type === 'Save'
+    type === "Save"
       ? styles.save
-      : type === 'Delete'
+      : type === "Delete"
       ? styles.delete
       : styles.default;
 
@@ -13,6 +18,7 @@ const Button = ({ type, children, onClick }) => {
     <button
       className={`${styles.button} ${typeClass}`}
       onClick={onClick}
+      disabled={disabled}
     >
       {children}
     </button>

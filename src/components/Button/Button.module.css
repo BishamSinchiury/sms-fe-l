@@ -1,0 +1,68 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 90px;
+  padding: 0.65rem 1.25rem;
+
+  border: none;
+  border-radius: var(--radius);
+
+  color: var(--text-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+
+  cursor: pointer;
+  user-select: none;
+
+  transition: all 0.25s ease;
+  box-shadow: var(--shadow);
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(0);
+}
+
+.button:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.4);
+  outline-offset: 2px;
+}
+
+.save {
+  background: var(--color-success);
+}
+
+.save:hover {
+  background: var(--color-success-hover);
+}
+
+.delete {
+  background: var(--color-danger);
+}
+
+.delete:hover {
+  background: var(--color-danger-hover);
+}
+
+.default {
+  background: var(--color-default);
+}
+
+.default:hover {
+  background: var(--color-default-hover);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .button {
+    min-width: 80px;
+    padding: 0.55rem 1rem;
+    font-size: 0.875rem;
+  }
+}

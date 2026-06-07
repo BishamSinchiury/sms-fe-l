@@ -1,17 +1,14 @@
 import Landing from "@/pages/Public/Landing";
+import ServerDown from "@/pages/Public/ServerDown";
 
 export const websiteroutes = [
-    {
-        path: "/",
-        element: <Landing />
-    },
-    {
-        path: "/about",
-        element: <h1>This about</h1>
-    },
-    {
-        path: "/contact",
-        element: <h1>This contact</h1>
-    },
+  { path: "/",           element: <Landing />,    },
+  { path: "/server-down", element: <ServerDown /> },
+];
 
-]
+export const navLinks = [
+  { name: "Home",    href: "/"        },
+  { name: "About",   href: "#about"   },
+  { name: "Contact", href: "#contact" },
+  { name: "Courses", href: "#courses"}
+];
