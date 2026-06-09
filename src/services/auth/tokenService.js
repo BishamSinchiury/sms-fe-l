@@ -1,26 +1,31 @@
-let accessToken = null;
+// src/services/auth/tokenService.js
+let userAccessToken = null;
+let adminAccessToken = null;
 
-const getAccessToken = () => accessToken;
-
-const setAccessToken = (token) => {
-  accessToken = token;
+const parseTokenPayload = (token) => {
+  try {
+    return JSON.parse(atob(token.split(".")[1]));
+  } catch {
+    return null;
+  }
 };
 
-const clearAccessToken = () => {
-  accessToken = null;
+
+
+const isTokenValid = (token) => {
+  if (!token) return false;
+  const payload = parseTokenPayload(token);
+  if (!payload) return false;
+  const tenSecondsFromNow = Date.now() / 1000 + 10;
+  return payload.exp > tenSecondsFromNow;
 };
 
-const isAccessTokenValid = () => {
-    if (!accessToken) return false;
+export const getUserAccessToken   = ()      => userAccessToken
+export const setUserAccessToken   = (token) => { userAccessToken = token; }
+export const clearUserAccessToken = ()      => { userAccessToken = null; }
+export const isUserTokenValid     = ()      => isTokenValid(userAccessToken)
 
-    try{
-        const payload = JSON.parse(atob(accessToken.split(".")[1]));
-        const tenSecondsFromNow = Date.now() / 1000 + 10;
-        return payload.exp > tenSecondsFromNow;
-    } catch{
-        return false;
-    }
-
-}
-
-export { getAccessToken, setAccessToken, clearAccessToken, isAccessTokenValid };
+export const getAdminAccessToken   = ()      => adminAccessToken;
+export const setAdminAccessToken   = (token) => { adminAccessToken = token; };
+export const clearAdminAccessToken = ()      => { adminAccessToken = null; };
+export const isAdminTokenValid     = ()      => isTokenValid(adminAccessToken);
