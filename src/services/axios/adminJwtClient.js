@@ -1,9 +1,9 @@
 import axiosBase from "./axiosBase";
 import {
-  getUserAccessToken,
-  setUserAccessToken,
-  clearUserAccessToken,
-  isUserTokenValid,
+  getAdminAccessToken,
+  setAdminAccessToken,
+  clearAdminAccessToken,
+  isAdminTokenValid,
 } from "../auth/tokenService";
 
 let isRefreshing = false;
@@ -20,20 +20,19 @@ const processQueue = (error, newToken = null) => {
   refreshQueue = [];
 };
 
-const jwtClient = axiosBase.create();
+const adminJwtClient = axiosBase.create();
 
-jwtClient.interceptors.request.use(
+adminJwtClient.interceptors.request.use(
   (config) => {
-    
-    if (isUserTokenValid()) {
-      config.headers["Authorization"] = `Bearer ${getUserAccessToken()}`;
+    if (isAdminTokenValid()) {
+      config.headers["Authorization"] = `Bearer ${getAdminAccessToken()}`;
     }
     return config;
   },
   (error) => Promise.reject(error)
 );
 
-jwtClient.interceptors.response.use(
+adminJwtClient.interceptors.response.use(
   (response) => response,
 
   async (error) => {
@@ -52,14 +51,14 @@ jwtClient.interceptors.response.use(
 
     if (status === 401) {
       if (originalRequest._retry) {
-        clearUserAccessToken();
-        window.location.href = "/login";
+        clearAdminAccessToken();
+        window.location.href = "/admin/login";
         return Promise.reject(error);
       }
 
-      if (originalRequest.url?.includes("/auth/refresh/")) {
-        clearUserAccessToken();
-        window.location.href = "/login";
+      if (originalRequest.url?.includes("/admin/refresh/")) {
+        clearAdminAccessToken();
+        window.location.href = "/admin/login";
         return Promise.reject(error);
       }
 
@@ -71,7 +70,7 @@ jwtClient.interceptors.response.use(
         })
           .then((newToken) => {
             originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-            return jwtClient(originalRequest);
+            return adminJwtClient(originalRequest);
           })
           .catch((err) => Promise.reject(err));
       }
@@ -80,21 +79,21 @@ jwtClient.interceptors.response.use(
 
       try {
         const response = await axiosBase.post(
-          "/auth/refresh/",
+          "/auth/admin/refresh/",
           {},
           { withCredentials: true }
         );
 
         const newToken = response.data.access;
-        setUserAccessToken(newToken);
+        setAdminAccessToken(newToken);
         processQueue(null, newToken);
 
         originalRequest.headers["Authorization"] = `Bearer ${newToken}`;
-        return jwtClient(originalRequest);
+        return adminJwtClient(originalRequest);
       } catch (refreshError) {
         processQueue(refreshError, null);
-        clearUserAccessToken();
-        window.location.href = "/login";
+        clearAdminAccessToken();
+        window.location.href = "/admin/login";
         return Promise.reject(refreshError);
       } finally {
         isRefreshing = false;
@@ -105,4 +104,4 @@ jwtClient.interceptors.response.use(
   }
 );
 
-export default jwtClient;
+export default adminJwtClient;

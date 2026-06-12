@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { useNotification } from "@/components/Notification/NotificationContainer";
+import { useUserAuth } from "@/context/UserAuthContext";
 import styles from "./Login.module.css";
 
 const EyeIcon = ({ open }) =>
@@ -18,10 +19,20 @@ const EyeIcon = ({ open }) =>
 
 const Login = () => {
   const { notify } = useNotification();
+  const { login, isAuthenticated, isLoading } = useUserAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ email: "", password: "" });
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
+
+  // Navigate only after render — never during render
+  useEffect(() => {
+    if (!isLoading && isAuthenticated) {
+      navigate("/dashboard")
+    }
+  }, [isAuthenticated, isLoading, navigate])
+
+  if (isLoading) return null
 
   const handleChange = (e) =>
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -29,13 +40,25 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    notify({
-      type: "info",
-      title: "Coming soon",
-      message: "Authentication will be wired up shortly.",
-    });
+    try {
+      await login(form.email, form.password);
+      navigate("/dashboard");
+    } catch (err) {
+      const status = err?.response?.status;
+      const detail = err?.response?.data?.detail;
+
+      if (status === 401) {
+        notify({ type: "error", title: "Login Failed", message: detail || "Invalid email or password." });
+      } else if (status === 403) {
+        notify({ type: "error", title: "Access Denied", message: detail || "You do not have access to this organization." });
+      } else if (status === 503) {
+        notify({ type: "error", title: "Service Unavailable", message: detail || "Something went wrong. Please try again." });
+      } else {
+        notify({ type: "error", title: "Error", message: detail || "Something went wrong. Please try again." });
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleForgot = () => {
@@ -55,7 +78,6 @@ const Login = () => {
       </div>
 
       <div className={styles.card}>
-        {/* Header */}
         <div className={styles.header}>
           <div className={styles.badge}>👤</div>
           <h1>Welcome Back</h1>
@@ -63,7 +85,6 @@ const Login = () => {
         </div>
 
         <form className={styles.form} onSubmit={handleSubmit}>
-          {/* Email */}
           <div className={styles.field}>
             <label htmlFor="email">Email address</label>
             <div className={styles.inputWrap}>
@@ -84,7 +105,6 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Password */}
           <div className={styles.field}>
             <div className={styles.labelRow}>
               <label htmlFor="password">Password</label>
@@ -118,17 +138,14 @@ const Login = () => {
             </div>
           </div>
 
-          {/* Submit */}
           <button type="submit" className={styles.submit} disabled={loading}>
             {loading && <span className={styles.spinner} />}
             {loading ? "Signing in…" : "Sign In"}
           </button>
         </form>
 
-        {/* Divider */}
         <div className={styles.divider}><span>or</span></div>
 
-        {/* Admin login CTA */}
         <button
           type="button"
           className={styles.adminBtn}
@@ -140,7 +157,6 @@ const Login = () => {
           Sign in as Admin
         </button>
 
-        {/* Sign up */}
         <div className={styles.footer}>
           <span>Don't have an account?</span>
           <NavLink to="/signup" className={styles.footerLink}>Create one</NavLink>
