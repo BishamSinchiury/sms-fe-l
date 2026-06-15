@@ -21,7 +21,11 @@ export const ORG = {
   PUBLICDATA: (domain) => {
     const resolved = domain === '127.0.0.1' ? 'localhost' : domain;
     return `/org/public/organization?domain_name=${resolved}`;
-  }
+  },
+  PUBLIC_SUBORGS: (domain) => {
+    const resolved = domain === '127.0.0.1' ? 'localhost' : domain;
+    return `/org/public/suborgs/?domain_name=${resolved}`;
+  },
 };
 
 // ─── Org Admin (sysadmin) ──────────────────────────────────────────────────────
@@ -37,8 +41,11 @@ export const ORG_ADMIN = {
 // ─── Sub Organizations ──────────────────────────────────────────────────────────
 
 export const SUBORG = {
-  LIST:   "/org/suborgs/",
-  DETAIL: (uuid) => `/org/suborgs/${uuid}/`,
+  LIST:    "/org/suborgs/",
+  DETAIL:  (uuid) => `/org/suborgs/${uuid}/`,
+  BASIC:   (uuid) => `/org/suborgs/${uuid}/basic/`,
+  CONTACT: (uuid) => `/org/suborgs/${uuid}/contact/`,
+  ADDRESS: (uuid) => `/org/suborgs/${uuid}/address/`,
 };
 
 // ─── Users Management ────────────────────────────────────────────────────────────
@@ -59,3 +66,4 @@ export const RBAC = {
   USER_PERMISSIONS:   (uuid) => `/rbac/users/${uuid}/permissions/`,
   LOGS:               "/rbac/logs/",
 };
+

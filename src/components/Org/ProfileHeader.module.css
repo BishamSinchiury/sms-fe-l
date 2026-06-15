@@ -1,0 +1,261 @@
+/* ─── Cover photo & avatar ────────────────────────────────── */
+
+.coverContainer {
+  position: relative;
+  width: 100%;
+  height: 260px;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.coverImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.coverPlaceholder {
+  width: 100%;
+  height: 100%;
+}
+
+.coverEditBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(6px);
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.coverEditBtn:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.avatarContainer {
+  position: absolute;
+  left: 2rem;
+  bottom: -48px;
+  width: 112px;
+  height: 112px;
+}
+
+.avatar,
+.avatarPlaceholder {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  border: 4px solid #0f0f17;
+  object-fit: cover;
+  display: block;
+  background: #1c1c28;
+}
+
+.avatarPlaceholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 2.2rem;
+}
+
+.avatarEditBtn {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  border: 2px solid #0f0f17;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: opacity 0.15s;
+}
+
+.avatarEditBtn:hover {
+  opacity: 0.9;
+}
+
+/* ─── Profile header info ────────────────────────────────── */
+
+.profileHeader {
+  padding: 64px 0.25rem 1.5rem;
+}
+
+.profileHeaderMain {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.profileName {
+  color: var(--text-color);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.profileMotto {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.95rem;
+  margin-top: 0.4rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-style: italic;
+}
+
+.quoteIcon {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.8rem;
+}
+
+.profileDomain {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.colorChips {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.85rem;
+}
+
+.colorChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.78rem;
+}
+
+.colorSwatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  display: inline-block;
+}
+
+.editPanel {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Profile completion banner ──────────────────────────── */
+
+.completionBanner {
+  background: rgba(79, 70, 229, 0.07);
+  border: 1px solid rgba(79, 70, 229, 0.25);
+  border-radius: var(--radius);
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.completionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.completionTitle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-color);
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.completionTitle svg {
+  color: var(--color-primary);
+}
+
+.completionPercent {
+  color: var(--color-primary);
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.progressTrack {
+  height: 8px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary, #7c3aed));
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+.completionHint {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+}
+
+/* ─── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .coverContainer {
+    height: 160px;
+  }
+
+  .avatarContainer {
+    left: 1.25rem;
+    bottom: -36px;
+    width: 84px;
+    height: 84px;
+  }
+
+  .avatar,
+  .avatarPlaceholder {
+    width: 84px;
+    height: 84px;
+    border-width: 3px;
+  }
+
+  .avatarEditBtn {
+    width: 30px;
+    height: 30px;
+  }
+
+  .profileHeader {
+    padding-top: 50px;
+  }
+
+  .coverEditBtn span {
+    display: none;
+  }
+}

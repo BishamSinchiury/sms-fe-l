@@ -18,4 +18,4 @@ export const updateOrgBasic = (data) =>
 
 export const updateOrgContact   = (data) => patch(ORG_ADMIN.CONTACT, data, adminJwtClient);
 export const updateOrgAddress   = (data) => patch(ORG_ADMIN.ADDRESS, data, adminJwtClient);
-export const updateOrgDocuments = (data) => patch(ORG_ADMIN.DOCUMENTS, data, adminJwtClient);
+export const updateOrgDocuments = (data) => patchForm(ORG_ADMIN.DOCUMENTS, data, adminJwtClient);

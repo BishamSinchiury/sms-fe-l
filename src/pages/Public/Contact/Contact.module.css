@@ -42,11 +42,55 @@
   margin: 0 0 2rem;
 }
 
-.info p {
+.info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-bottom: 2rem;
+}
+
+.infoRow {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
   font-size: 0.9rem;
   color: #444;
-  margin: 0.5rem 0;
 }
+
+.icon {
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  color: #888;
+  font-size: 0.95rem;
+}
+
+.emailLink {
+  color: #444;
+  text-decoration: none;
+}
+
+.emailLink:hover {
+  color: #111;
+  text-decoration: underline;
+}
+
+/* ── Map ──────────────────────────────────────────────────────────── */
+
+.mapWrapper {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1.5px solid #e8e8e8;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+}
+
+.map {
+  width: 100%;
+  height: 260px;
+  border: none;
+  display: block;
+}
+
+/* ── Form ─────────────────────────────────────────────────────────── */
 
 .form {
   display: flex;
@@ -107,6 +151,8 @@
   transform: translateY(-1px);
 }
 
+/* ── Thanks state ─────────────────────────────────────────────────── */
+
 .thanks {
   text-align: center;
   padding: 3rem 2rem;
@@ -114,11 +160,19 @@
   border-radius: 16px;
 }
 
-.thanks span { font-size: 2.5rem; }
+.thanksIcon {
+  font-size: 2.5rem;
+  color: #111;
+}
+
 .thanks h3 {
   font-family: 'Playfair Display', serif;
   font-size: 1.5rem;
   margin: 1rem 0 0.5rem;
   color: #111;
 }
-.thanks p { color: #666; font-size: 0.95rem; }
+
+.thanks p {
+  color: #666;
+  font-size: 0.95rem;
+}

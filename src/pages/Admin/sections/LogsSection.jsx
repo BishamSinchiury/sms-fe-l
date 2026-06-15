@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Section.module.css";
+import drawerStyles from "./Drawer.module.css";
+import formStyles from "./FormElements.module.css";
 import { listActivityLogs } from "@/services/user/Org/rbacService";
 
 const LogsSection = () => {
@@ -88,43 +90,43 @@ const LogsSection = () => {
       </div>
 
       {selectedLog && (
-        <div className={styles.overlay} onClick={() => setSelectedLog(null)}>
-          <div className={styles.drawer} onClick={e => e.stopPropagation()}>
-            <div className={styles.drawerHeader}>
-              <h3 className={styles.drawerTitle}>Log Details</h3>
-              <button className={styles.closeBtn} onClick={() => setSelectedLog(null)}>
+        <div className={drawerStyles.overlay} onClick={() => setSelectedLog(null)}>
+          <div className={drawerStyles.drawer} onClick={e => e.stopPropagation()}>
+            <div className={drawerStyles.drawerHeader}>
+              <h3 className={drawerStyles.drawerTitle}>Log Details</h3>
+              <button className={drawerStyles.closeBtn} onClick={() => setSelectedLog(null)}>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
             
-            <div className={styles.grid} style={{ display: 'flex', flexDirection: 'column' }}>
-              <div className={styles.detailRow}>
-                <span className={styles.detailLabel}>Time:</span>
-                <span className={styles.detailValue}>{new Date(selectedLog.created_at).toLocaleString()}</span>
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div className={drawerStyles.detailRow}>
+                <span className={drawerStyles.detailLabel}>Time:</span>
+                <span className={drawerStyles.detailValue}>{new Date(selectedLog.created_at).toLocaleString()}</span>
               </div>
-              <div className={styles.detailRow}>
-                <span className={styles.detailLabel}>User:</span>
-                <span className={styles.detailValue}>{selectedLog.user_email || "System"}</span>
+              <div className={drawerStyles.detailRow}>
+                <span className={drawerStyles.detailLabel}>User:</span>
+                <span className={drawerStyles.detailValue}>{selectedLog.user_email || "System"}</span>
               </div>
-              <div className={styles.detailRow}>
-                <span className={styles.detailLabel}>Action:</span>
-                <span className={styles.detailValue}>{selectedLog.action_display}</span>
+              <div className={drawerStyles.detailRow}>
+                <span className={drawerStyles.detailLabel}>Action:</span>
+                <span className={drawerStyles.detailValue}>{selectedLog.action_display}</span>
               </div>
-              <div className={styles.detailRow}>
-                <span className={styles.detailLabel}>Target Type:</span>
-                <span className={styles.detailValue}>{selectedLog.target_type || "-"}</span>
+              <div className={drawerStyles.detailRow}>
+                <span className={drawerStyles.detailLabel}>Target Type:</span>
+                <span className={drawerStyles.detailValue}>{selectedLog.target_type || "-"}</span>
               </div>
-              <div className={styles.detailRow}>
-                <span className={styles.detailLabel}>Target UUID:</span>
-                <span className={styles.detailValue}>{selectedLog.object_uuid || "-"}</span>
+              <div className={drawerStyles.detailRow}>
+                <span className={drawerStyles.detailLabel}>Target UUID:</span>
+                <span className={drawerStyles.detailValue}>{selectedLog.object_uuid || "-"}</span>
               </div>
-              <div className={styles.detailRow}>
-                <span className={styles.detailLabel}>IP Address:</span>
-                <span className={styles.detailValue}>{selectedLog.ip_address || "-"}</span>
+              <div className={drawerStyles.detailRow}>
+                <span className={drawerStyles.detailLabel}>IP Address:</span>
+                <span className={drawerStyles.detailValue}>{selectedLog.ip_address || "-"}</span>
               </div>
-              <div className={styles.field} style={{ marginTop: '1rem' }}>
+              <div className={formStyles.field} style={{ marginTop: '1rem' }}>
                 <label>Metadata</label>
                 <pre style={{ background: 'rgba(255,255,255,0.05)', padding: '1rem', borderRadius: '8px', fontSize: '0.8rem', overflowX: 'auto', color: 'var(--text-color)' }}>
                   {JSON.stringify(selectedLog.metadata, null, 2)}

@@ -7,6 +7,32 @@
   font-family: 'DM Sans', sans-serif;
 }
 
+.stateScreen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.spinner {
+  font-size: 1.75rem;
+  color: #888;
+  animation: spin 0.9s linear infinite;
+}
+
+.errorIcon {
+  font-size: 1.75rem;
+  color: #e53e3e;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
 /* ── Background ─────────────────────────────────────── */
 .heroBg {
   position: fixed;
