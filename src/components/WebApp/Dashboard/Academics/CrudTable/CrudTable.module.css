@@ -1,0 +1,414 @@
+/* ─── Card ─────────────────────────────────────────────────── */
+
+.card {
+  background: #111119;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.015);
+}
+
+.cardTitle {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #e8e8f0;
+  letter-spacing: -0.01em;
+}
+
+.cardSubtitle {
+  font-size: 0.77rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin-top: 3px;
+  font-weight: 400;
+}
+
+/* ─── Add Button ────────────────────────────────────────────── */
+
+.addBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.95rem;
+  background: #6366f1;
+  color: #fff;
+  border: none;
+  border-radius: 7px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.addBtn:hover {
+  background: #5558e3;
+}
+
+.addBtn:active {
+  transform: scale(0.97);
+}
+
+/* ─── Filter Bar ────────────────────────────────────────────── */
+
+.filterBar {
+  padding: 0.8rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.filterRow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.searchWrap {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 7px;
+  padding: 0.42rem 0.85rem;
+  max-width: 280px;
+  width: 100%;
+  transition: border-color 0.15s;
+}
+
+.searchWrap:focus-within {
+  border-color: rgba(99, 102, 241, 0.45);
+}
+
+.searchIcon {
+  color: rgba(255, 255, 255, 0.28);
+  font-size: 0.78rem;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.83rem;
+  min-width: 0;
+}
+
+.searchInput::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.searchClear {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  font-size: 0.78rem;
+  transition: color 0.15s;
+}
+
+.searchClear:hover {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.filterSelect {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.5rem 0.7rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.82rem;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+  min-width: 100px;
+}
+
+.filterSelect:focus {
+  border-color: #6366f1;
+}
+
+.filterSelect option {
+  background: #1e1e2a;
+  color: #e5e7eb;
+}
+
+/* ─── Table ─────────────────────────────────────────────────── */
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.845rem;
+}
+
+.table thead tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+.table thead th {
+  padding: 0.65rem 1.25rem;
+  text-align: left;
+  font-size: 0.69rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: rgba(255, 255, 255, 0.28);
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.table tbody tr {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  transition: background 0.1s;
+}
+
+.table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+.table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table tbody td {
+  padding: 0.875rem 1.25rem;
+  color: rgba(255, 255, 255, 0.68);
+  vertical-align: middle;
+}
+
+/* ─── Action Buttons ────────────────────────────────────────── */
+
+.actionCell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.actionBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.32rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+
+.actionBtnEdit {
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+.actionBtnEdit:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: #818cf8;
+  border-color: rgba(99, 102, 241, 0.28);
+}
+
+.actionBtnDelete {
+  background: transparent;
+  color: rgba(255, 255, 255, 0.3);
+  border: 1px solid transparent;
+}
+
+.actionBtnDelete:hover {
+  background: rgba(220, 38, 38, 0.1);
+  color: #f87171;
+  border-color: rgba(220, 38, 38, 0.25);
+}
+
+/* ─── Badges ────────────────────────────────────────────────── */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.28rem 0.65rem;
+  border-radius: 5px;
+  font-size: 0.73rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.badgePrimary {
+  background: rgba(99, 102, 241, 0.14);
+  color: #818cf8;
+  border: 1px solid rgba(99, 102, 241, 0.22);
+}
+
+.badgeSuccess {
+  background: rgba(16, 185, 129, 0.1);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.badgeDanger {
+  background: rgba(220, 38, 38, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(220, 38, 38, 0.2);
+}
+
+.badgeDefault {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+}
+
+/* ─── States ────────────────────────────────────────────────── */
+
+.loading {
+  padding: 3rem;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.85rem;
+}
+
+.empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.25);
+  padding: 3.5rem 1rem;
+  font-size: 0.85rem;
+}
+
+/* ─── Searchable Filter Combobox ────────────────────────────── */
+
+.comboWrap {
+  position: relative;
+  min-width: 160px;
+}
+
+.comboInput {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 0.45rem 0.7rem;
+  cursor: text;
+  transition: border-color 0.15s;
+}
+
+.comboInput:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.comboInputOpen {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.12);
+}
+
+.comboInputSelected {
+  border-color: rgba(99, 102, 241, 0.4);
+}
+
+.comboTextInput {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.82rem;
+  min-width: 0;
+  cursor: text;
+}
+
+.comboTextInput::placeholder {
+  color: rgba(255, 255, 255, 0.28);
+}
+
+.comboChevron {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.comboClear {
+  display: flex;
+  align-items: center;
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.comboClear:hover {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.comboDropdown {
+  position: absolute;
+  top: calc(100% + 5px);
+  left: 0;
+  right: 0;
+  background: #1a1a26;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+  z-index: 200;
+  max-height: 220px;
+  overflow-y: auto;
+  padding: 4px;
+}
+
+.comboDropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.comboDropdown::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.comboOption {
+  padding: 0.48rem 0.75rem;
+  border-radius: 5px;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.65);
+  cursor: pointer;
+  transition: background 0.1s, color 0.1s;
+}
+
+.comboOption:hover {
+  background: rgba(99, 102, 241, 0.12);
+  color: #a5b4fc;
+}
+
+.comboOptionActive {
+  background: rgba(99, 102, 241, 0.18);
+  color: #818cf8;
+  font-weight: 500;
+}
+
+.comboNoResults {
+  padding: 0.7rem 0.75rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.25);
+  text-align: center;
+}
+

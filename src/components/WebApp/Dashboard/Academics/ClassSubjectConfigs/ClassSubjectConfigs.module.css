@@ -1,0 +1,195 @@
+.card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1.1rem 1.4rem 0.9rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.cardTitle {
+  font-size: 0.97rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.88);
+  margin: 0;
+}
+.cardSub {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3);
+  margin: 3px 0 0;
+}
+.addBtn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #4f46e5;
+  border: none;
+  color: #fff;
+  padding: 0.42rem 0.9rem;
+  border-radius: 7px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+.addBtn:hover { background: #4338ca; }
+
+/* Filter bar */
+.filterBar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.7rem 1.4rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.searchWrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+.searchIcon {
+  position: absolute;
+  left: 9px;
+  color: rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+}
+.searchInput {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 7px;
+  color: rgba(255, 255, 255, 0.8);
+  padding: 0.4rem 2rem 0.4rem 2rem;
+  font-size: 0.81rem;
+  outline: none;
+}
+.searchInput:focus { border-color: rgba(99, 102, 241, 0.4); }
+.searchClear {
+  position: absolute;
+  right: 9px;
+  color: rgba(255, 255, 255, 0.25);
+  cursor: pointer;
+}
+.searchClear:hover { color: rgba(255, 255, 255, 0.55); }
+.filterSelect {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 7px;
+  color: rgba(255, 255, 255, 0.65);
+  padding: 0.4rem 0.7rem;
+  font-size: 0.78rem;
+  outline: none;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.filterSelect option { background: #1e1e2e; }
+
+/* Table */
+.loading {
+  padding: 2.5rem;
+  text-align: center;
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.3);
+}
+.tableWrap { overflow-x: auto; }
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.81rem;
+}
+.table thead th {
+  padding: 0.55rem 1rem;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  white-space: nowrap;
+}
+.table tbody td {
+  padding: 0.65rem 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  vertical-align: middle;
+}
+.table tbody tr:hover td { background: rgba(255, 255, 255, 0.02); }
+.table tbody tr:last-child td { border-bottom: none; }
+.empty {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.2);
+  padding: 2.5rem !important;
+  font-size: 0.82rem;
+}
+.nameCell  { color: rgba(255, 255, 255, 0.88) !important; font-weight: 500; }
+
+.streamBadge {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px solid rgba(99, 102, 241, 0.2);
+  color: #a5b4fc;
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 0.73rem;
+  white-space: nowrap;
+  margin-right: 4px;
+  display: inline-block;
+}
+.allStreamsBadge {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.4);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 0.73rem;
+  white-space: nowrap;
+}
+.countBadge {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+}
+.countCap {
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.72rem;
+}
+.badgeActive {
+  background: rgba(110, 231, 183, 0.1);
+  border: 1px solid rgba(110, 231, 183, 0.2);
+  color: #6ee7b7;
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 0.72rem;
+}
+.badgeInactive {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.3);
+  padding: 2px 8px;
+  border-radius: 5px;
+  font-size: 0.72rem;
+}
+.actions { display: flex; gap: 6px; }
+.editBtn {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.6);
+  padding: 0.28rem 0.65rem;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.75rem;
+  transition: background 0.15s, color 0.15s;
+}
+.editBtn:hover {
+  background: rgba(99, 102, 241, 0.1);
+  border-color: rgba(99, 102, 241, 0.3);
+  color: #a5b4fc;
+}

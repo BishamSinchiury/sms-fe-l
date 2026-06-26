@@ -61,13 +61,7 @@ const Login = () => {
     }
   };
 
-  const handleForgot = () => {
-    notify({
-      type: "info",
-      title: "Password Reset",
-      message: "Reset link will be sent to your email. Feature coming soon.",
-    });
-  };
+  const handleForgot = () => navigate("/forgot-password");
 
   return (
     <div className={styles.page}>

@@ -4,14 +4,20 @@ import { useOrg } from "@/context/OrgContext";
 import OrganizationSection from "./sections/OrganizationSection";
 import SubOrganizationSection from "./sections/SubOrganizationSection";
 import UsersManagementSection from "./sections/UsersManagementSection";
+import RolesManagementSection from "./sections/RolesManagementSection";
 import LogsSection from "./sections/LogsSection";
+import StudentManagementSection from "./sections/StudentManagementSection";
+import StudentClaimsSection from "./sections/StudentClaimsSection";
 import styles from "./AdminDashboard.module.css";
-import { FiBriefcase, FiLayers, FiUsers, FiActivity } from "react-icons/fi";
+import { FiBriefcase, FiLayers, FiUsers, FiActivity, FiShield, FiUserCheck, FiBook } from "react-icons/fi";
 
 const NAV_ITEMS = [
   { key: "organization", label: "Organization", icon: <FiBriefcase /> },
   { key: "suborg",       label: "Sub Organization", icon: <FiLayers /> },
   { key: "users",        label: "Users Management", icon: <FiUsers /> },
+  { key: "roles",        label: "Roles Management", icon: <FiShield /> },
+  { key: "students",     label: "Students", icon: <FiBook /> },
+  { key: "claims",       label: "Student Claims", icon: <FiUserCheck /> },
   { key: "logs",         label: "Logs", icon: <FiActivity /> },
 ];
 
@@ -26,6 +32,9 @@ const AdminDashboard = () => {
       case "organization": return <OrganizationSection />;
       case "suborg":       return <SubOrganizationSection />;
       case "users":        return <UsersManagementSection />;
+      case "roles":        return <RolesManagementSection />;
+      case "students":     return <StudentManagementSection />;
+      case "claims":       return <StudentClaimsSection />;
       case "logs":         return <LogsSection />;
       default:             return null;
     }

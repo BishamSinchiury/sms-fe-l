@@ -1,135 +1,291 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styles from "./Section.module.css";
-import drawerStyles from "./Drawer.module.css";
 import formStyles from "./FormElements.module.css";
 import {
   listUsers, createUser, updateUser, deleteUser, listRoles
 } from "@/services/user/Org/userManagementService";
-import { FaThList, FaThLarge, FaSearch, FaTimes, FaTrash, FaEdit, FaUserPlus, FaUser } from "react-icons/fa";
+import { useNotification } from "@/components/Notification/NotificationContainer";
+import { FaThList, FaThLarge, FaSearch, FaTimes, FaTrash, FaEdit, FaUserPlus, FaCheck } from "react-icons/fa";
 
-const initialFilters = { search: "", role: "", status: "", is_active: "", is_staff: "" };
+// ── Constants ──────────────────────────────────────────────────────────────────
+
+const initialFilters = {
+  search: "", role: "", status: "", is_active: "", is_staff: "", is_verified: ""
+};
+
+const STATUS_OPTIONS = ["pending", "approved", "rejected", "suspended"];
+
+// ── Avatar helpers ─────────────────────────────────────────────────────────────
+
+const AVATAR_COLORS = ["#6366f1","#8b5cf6","#ec4899","#f43f5e","#f97316","#14b8a6","#06b6d4","#84cc16"];
+const getInitials  = (u) => {
+  const fn = u.first_name || "", ln = u.last_name || "";
+  if (fn && ln) return `${fn[0]}${ln[0]}`.toUpperCase();
+  return (u.email?.[0] || "?").toUpperCase();
+};
+const getAvatarColor = (uuid) => AVATAR_COLORS[(uuid?.charCodeAt(0) ?? 0) % AVATAR_COLORS.length];
+
+// ── Modal ──────────────────────────────────────────────────────────────────────
+
+const UserModal = ({ user, roles, onClose, onSave }) => {
+  const isEdit = Boolean(user?.uuid);
+  const [formData, setFormData] = useState(() =>
+    isEdit
+      ? {
+          first_name:  user.first_name  || "",
+          last_name:   user.last_name   || "",
+          username:    user.username    || "",
+          is_staff:    user.is_staff    || false,
+          is_active:   user.is_active   !== false,
+          role_uuid:   user.role_uuid   || "",
+        }
+      : {
+          email: "", password: "", first_name: "", last_name: "",
+          is_staff: false, is_active: true, role_uuid: "",
+        }
+  );
+
+  const set = (key, val) => setFormData(p => ({ ...p, [key]: val }));
+
+  // Close on Escape
+  useEffect(() => {
+    const handler = (e) => { if (e.key === "Escape") onClose(); };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [onClose]);
+
+  return (
+    <div className={formStyles.modalOverlay} onClick={onClose}>
+      <div className={formStyles.modal} onClick={e => e.stopPropagation()}>
+
+        {/* Header */}
+        <div className={formStyles.modalHeader}>
+          <div className={formStyles.modalHeaderLeft}>
+            <div
+              className={formStyles.modalAvatar}
+              style={{ background: isEdit ? getAvatarColor(user.uuid) : "#6366f1" }}
+            >
+              {isEdit ? getInitials(user) : <FaUserPlus />}
+            </div>
+            <div>
+              <h3 className={formStyles.modalTitle}>{isEdit ? "Edit User" : "New User"}</h3>
+              <p className={formStyles.modalSub}>
+                {isEdit ? user.email : "Fill in details to create a new user"}
+              </p>
+            </div>
+          </div>
+          <button className={formStyles.modalClose} onClick={onClose} aria-label="Close">
+            <FaTimes />
+          </button>
+        </div>
+
+        {/* Body */}
+        <div className={formStyles.modalBody}>
+
+          {/* Create-only fields */}
+          {!isEdit && (
+            <div className={formStyles.row}>
+              <div className={formStyles.field}>
+                <label>Email <span className={formStyles.required}>*</span></label>
+                <input
+                  type="email"
+                  placeholder="user@example.com"
+                  value={formData.email}
+                  onChange={e => set("email", e.target.value)}
+                />
+              </div>
+              <div className={formStyles.field}>
+                <label>Password <span className={formStyles.required}>*</span></label>
+                <input
+                  type="password"
+                  placeholder="Min. 8 characters"
+                  value={formData.password}
+                  onChange={e => set("password", e.target.value)}
+                />
+              </div>
+            </div>
+          )}
+
+          {/* Edit-only: username */}
+          {isEdit && (
+            <div className={formStyles.field}>
+              <label>Username</label>
+              <input
+                placeholder="username"
+                value={formData.username}
+                onChange={e => set("username", e.target.value)}
+              />
+            </div>
+          )}
+
+          <div className={formStyles.row}>
+            <div className={formStyles.field}>
+              <label>First Name</label>
+              <input
+                placeholder="First name"
+                value={formData.first_name}
+                onChange={e => set("first_name", e.target.value)}
+              />
+            </div>
+            <div className={formStyles.field}>
+              <label>Last Name</label>
+              <input
+                placeholder="Last name"
+                value={formData.last_name}
+                onChange={e => set("last_name", e.target.value)}
+              />
+            </div>
+          </div>
+
+          <div className={formStyles.field}>
+            <label>Role</label>
+            <select value={formData.role_uuid} onChange={e => set("role_uuid", e.target.value)}>
+              <option value="">— No role —</option>
+              {roles.map(r => (
+                <option key={r.uuid} value={r.uuid}>{r.name}</option>
+              ))}
+            </select>
+          </div>
+
+          {/* Toggles */}
+          <div className={formStyles.toggleRow}>
+            <label className={formStyles.toggle}>
+              <input
+                type="checkbox"
+                checked={formData.is_staff}
+                onChange={e => set("is_staff", e.target.checked)}
+              />
+              <span className={formStyles.toggleTrack}>
+                <span className={formStyles.toggleThumb} />
+              </span>
+              <span className={formStyles.toggleLabel}>Staff member</span>
+            </label>
+
+            {isEdit && (
+              <label className={formStyles.toggle}>
+                <input
+                  type="checkbox"
+                  checked={formData.is_active}
+                  onChange={e => set("is_active", e.target.checked)}
+                />
+                <span className={formStyles.toggleTrack}>
+                  <span className={formStyles.toggleThumb} />
+                </span>
+                <span className={formStyles.toggleLabel}>Active account</span>
+              </label>
+            )}
+          </div>
+        </div>
+
+        {/* Footer */}
+        <div className={formStyles.modalFooter}>
+          <button className={formStyles.cancelBtn} onClick={onClose}>Cancel</button>
+          <button className={formStyles.saveBtn} onClick={() => onSave(formData, user?.uuid)}>
+            {isEdit ? "Save Changes" : "Create User"}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+// ── Main component ─────────────────────────────────────────────────────────────
 
 const UsersManagementSection = () => {
-  const [users, setUsers] = useState([]);
-  const [roles, setRoles] = useState([]);
+  const { notify } = useNotification();
+  const [users,   setUsers]   = useState([]);
+  const [roles,   setRoles]   = useState([]);
   const [loading, setLoading] = useState(true);
-  const [viewMode, setViewMode] = useState("table"); // "table" | "cards"
-  const [filters, setFilters] = useState(initialFilters);
+  const [viewMode, setViewMode] = useState("table");
+  const [filters,  setFilters]  = useState(initialFilters);
+  const [modalUser, setModalUser] = useState(undefined); // undefined = closed, null = new, object = edit
 
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [editingUser, setEditingUser] = useState(null);
-  const [formData, setFormData] = useState({});
+  // ── Data fetching ────────────────────────────────────────────────────────────
 
-  const fetchData = useCallback(async (filterParams = {}) => {
+  const fetchData = useCallback(async (params = {}) => {
     setLoading(true);
     try {
-      const [usersRes, rolesRes] = await Promise.all([
-        listUsers(filterParams),
-        listRoles()
-      ]);
+      // Strip empty strings so they're not sent as query params
+      const clean = Object.fromEntries(Object.entries(params).filter(([, v]) => v !== ""));
+      const [usersRes, rolesRes] = await Promise.all([listUsers(clean), listRoles()]);
       setUsers(usersRes || []);
       setRoles(rolesRes || []);
     } catch (e) {
       console.error(e);
+      notify({ type: "error", title: "Error", message: "Failed to load users." });
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [notify]);
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
+  // ── Filters ──────────────────────────────────────────────────────────────────
+
   const handleFilterChange = (key, value) => {
-    const newFilters = { ...filters, [key]: value };
-    setFilters(newFilters);
-    const active = {};
-    Object.entries(newFilters).forEach(([k, v]) => { if (v) active[k] = v; });
-    fetchData(active);
+    const next = { ...filters, [key]: value };
+    setFilters(next);
+    fetchData(next);
   };
 
-  const clearFilters = () => {
-    setFilters(initialFilters);
-    fetchData();
-  };
+  const clearFilters = () => { setFilters(initialFilters); fetchData(); };
+  const hasActiveFilters = Object.values(filters).some(Boolean);
 
-  const hasActiveFilters = Object.values(filters).some(v => v);
+  // Derive role options from loaded roles list (not user data) for consistency
+  const roleOptions = roles.map(r => r.name);
 
-  const handleOpenDrawer = (user = null) => {
-    setEditingUser(user);
-    if (user) {
-      setFormData({
-        first_name: user.first_name || "",
-        last_name: user.last_name || "",
-        username: user.username || "",
-        is_staff: user.is_staff || false,
-        is_active: user.is_active !== false,
-        role_uuid: user.role_uuid || ""
-      });
-    } else {
-      setFormData({
-        email: "",
-        password: "",
-        first_name: "",
-        last_name: "",
-        is_staff: false,
-        is_active: true,
-        role_uuid: ""
-      });
-    }
-    setDrawerOpen(true);
-  };
+  // ── CRUD ─────────────────────────────────────────────────────────────────────
 
-  const handleCloseDrawer = () => {
-    setDrawerOpen(false);
-    setEditingUser(null);
-  };
-
-  const handleSave = async () => {
+  const handleSave = async (formData, uuid) => {
     try {
-      if (editingUser?.uuid) {
-        await updateUser(editingUser.uuid, formData);
+      if (uuid) {
+        await updateUser(uuid, formData);
+        notify({ type: "success", title: "Updated", message: "User updated successfully." });
       } else {
         await createUser(formData);
+        notify({ type: "success", title: "Created", message: "User created successfully." });
       }
-      handleCloseDrawer();
+      setModalUser(undefined);
       fetchData(filters);
     } catch (e) {
-      const msg = e?.response?.data?.email?.[0] || e?.response?.data?.detail || "Error saving user.";
-      alert(msg);
+      const msg =
+        e?.response?.data?.email?.[0]     ||
+        e?.response?.data?.password?.[0]  ||
+        e?.response?.data?.detail         ||
+        "Error saving user.";
+      notify({ type: "error", title: "Error", message: msg });
     }
   };
 
   const handleDelete = async (uuid) => {
-    if (!window.confirm("Are you sure you want to delete this user?")) return;
+    if (!window.confirm("Delete this user? This cannot be undone.")) return;
     try {
       await deleteUser(uuid);
+      notify({ type: "success", title: "Deleted", message: "User deleted." });
       fetchData(filters);
     } catch (e) {
-      alert(e?.response?.data?.detail || "Error deleting user.");
+      notify({ type: "error", title: "Error", message: e?.response?.data?.detail || "Error deleting user." });
     }
   };
 
-  // ── Avatar generation ──────────────────────────────────────────────────
-
-  const getInitials = (u) => {
-    const fn = u.first_name || "";
-    const ln = u.last_name || "";
-    if (fn && ln) return `${fn[0]}${ln[0]}`.toUpperCase();
-    return (u.email?.[0] || "?").toUpperCase();
+  const handleApprove = async (uuid) => {
+    try {
+      await updateUser(uuid, { is_verified: true, status: "approved" });
+      notify({ type: "success", title: "Approved", message: "User has been approved." });
+      fetchData(filters);
+    } catch {
+      notify({ type: "error", title: "Error", message: "Failed to approve user." });
+    }
   };
 
-  const avatarColors = ["#6366f1", "#8b5cf6", "#ec4899", "#f43f5e", "#f97316", "#14b8a6", "#06b6d4", "#84cc16"];
-  const getAvatarColor = (uuid) => avatarColors[uuid?.charCodeAt(0) % avatarColors.length] || "#6366f1";
-
-  // ── Filter options from loaded data ────────────────────────────────────
-
-  const roleOptions = [...new Set(users.map(u => u.role).filter(Boolean))];
-  const statusOptions = [...new Set(users.map(u => u.status).filter(Boolean))];
-
-  if (loading) return <div className={styles.loading}>Loading Users...</div>;
+  // ── Render ────────────────────────────────────────────────────────────────────
 
   return (
     <div>
       <div className={styles.card}>
+
+        {/* ── Header ── */}
         <div className={styles.cardHeader}>
           <div>
             <h2 className={styles.cardTitle}>User Management</h2>
@@ -138,72 +294,65 @@ const UsersManagementSection = () => {
           <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
             <button
               className={`${styles.iconBtn} ${viewMode === "table" ? styles.iconBtnActive : ""}`}
-              onClick={() => setViewMode("table")}
-              title="Table view"
-            >
-              <FaThList />
-            </button>
+              onClick={() => setViewMode("table")} title="Table view"
+            ><FaThList /></button>
             <button
               className={`${styles.iconBtn} ${viewMode === "cards" ? styles.iconBtnActive : ""}`}
-              onClick={() => setViewMode("cards")}
-              title="Card view"
+              onClick={() => setViewMode("cards")} title="Card view"
+            ><FaThLarge /></button>
+            <button
+              className={`${styles.badge} ${styles.badgePrimary}`}
+              style={{ border: "none", cursor: "pointer" }}
+              onClick={() => setModalUser(null)}
             >
-              <FaThLarge />
-            </button>
-            <button className={`${styles.badge} ${styles.badgePrimary}`} style={{ border: 'none', cursor: 'pointer' }} onClick={() => handleOpenDrawer()}>
               <FaUserPlus /> Add User
             </button>
           </div>
         </div>
 
-        {/* ── Filters & Search ─────────────────────────────────────── */}
+        {/* ── Filter bar ── */}
         <div className={styles.filterBar}>
           <div className={styles.searchWrap}>
             <FaSearch className={styles.searchIcon} />
             <input
               className={styles.searchInput}
-              placeholder="Search by name or email..."
+              placeholder="Search by name or email…"
               value={filters.search}
-              onChange={(e) => handleFilterChange("search", e.target.value)}
+              onChange={e => handleFilterChange("search", e.target.value)}
             />
+            {filters.search && (
+              <button className={styles.searchClear} onClick={() => handleFilterChange("search", "")}>
+                <FaTimes />
+              </button>
+            )}
           </div>
 
-          <select
-            className={styles.filterSelect}
-            value={filters.role}
-            onChange={(e) => handleFilterChange("role", e.target.value)}
-          >
+          <select className={styles.filterSelect} value={filters.role} onChange={e => handleFilterChange("role", e.target.value)}>
             <option value="">All Roles</option>
             {roleOptions.map(r => <option key={r} value={r}>{r}</option>)}
           </select>
 
-          <select
-            className={styles.filterSelect}
-            value={filters.status}
-            onChange={(e) => handleFilterChange("status", e.target.value)}
-          >
-            <option value="">All Status</option>
-            {statusOptions.map(s => <option key={s} value={s}>{s}</option>)}
+          <select className={styles.filterSelect} value={filters.status} onChange={e => handleFilterChange("status", e.target.value)}>
+            <option value="">All Statuses</option>
+            {STATUS_OPTIONS.map(s => <option key={s} value={s}>{s.charAt(0).toUpperCase() + s.slice(1)}</option>)}
           </select>
 
-          <select
-            className={styles.filterSelect}
-            value={filters.is_active}
-            onChange={(e) => handleFilterChange("is_active", e.target.value)}
-          >
+          <select className={styles.filterSelect} value={filters.is_active} onChange={e => handleFilterChange("is_active", e.target.value)}>
             <option value="">Active Status</option>
             <option value="true">Active</option>
             <option value="false">Inactive</option>
           </select>
 
-          <select
-            className={styles.filterSelect}
-            value={filters.is_staff}
-            onChange={(e) => handleFilterChange("is_staff", e.target.value)}
-          >
+          <select className={styles.filterSelect} value={filters.is_staff} onChange={e => handleFilterChange("is_staff", e.target.value)}>
             <option value="">Staff Status</option>
             <option value="true">Staff</option>
             <option value="false">Non-Staff</option>
+          </select>
+
+          <select className={styles.filterSelect} value={filters.is_verified} onChange={e => handleFilterChange("is_verified", e.target.value)}>
+            <option value="">Verification</option>
+            <option value="true">Verified</option>
+            <option value="false">Unverified</option>
           </select>
 
           {hasActiveFilters && (
@@ -213,176 +362,142 @@ const UsersManagementSection = () => {
           )}
         </div>
 
-        {/* ── Table View ──────────────────────────────────────────── */}
-        {viewMode === "table" && (
+        {/* ── Loading ── */}
+        {loading && <div className={styles.loading}>Loading users…</div>}
+
+        {/* ── Table view ── */}
+        {!loading && viewMode === "table" && (
           <div className={styles.tableWrap}>
             <table className={styles.table}>
               <thead>
                 <tr>
-                  <th>Email</th>
-                  <th>Name</th>
+                  <th>User</th>
                   <th>Role</th>
                   <th>Status</th>
+                  <th>Verified</th>
                   <th>Staff</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {users.length === 0 ? (
-                  <tr>
-                    <td colSpan="6" className={styles.empty}>No users found.</td>
-                  </tr>
-                ) : (
-                  users.map((u) => (
-                    <tr key={u.uuid}>
-                      <td>{u.email}</td>
-                      <td>{u.full_name || u.username || "-"}</td>
-                      <td>{u.role || "-"}</td>
-                      <td>
-                        <span className={`${styles.badge} ${u.is_active ? styles.badgeSuccess : styles.badgeDanger}`}>
-                          {u.is_active ? "Active" : "Inactive"}
-                        </span>
-                      </td>
-                      <td>{u.is_staff ? "Yes" : "No"}</td>
-                      <td>
-                        <div style={{ display: 'flex', gap: '8px' }}>
-                          <button className={`${styles.badge} ${styles.badgeDefault}`} style={{ border: 'none', cursor: 'pointer' }} onClick={() => handleOpenDrawer(u)}>Edit</button>
-                          <button className={`${styles.badge} ${styles.badgeDanger}`} style={{ border: 'none', cursor: 'pointer' }} onClick={() => handleDelete(u.uuid)}>Delete</button>
+                  <tr><td colSpan="6" className={styles.empty}>No users found.</td></tr>
+                ) : users.map(u => (
+                  <tr key={u.uuid}>
+                    <td>
+                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                        <div
+                          style={{
+                            width: 32, height: 32, borderRadius: "50%",
+                            background: getAvatarColor(u.uuid),
+                            display: "flex", alignItems: "center", justifyContent: "center",
+                            fontSize: "0.75rem", fontWeight: 700, color: "#fff", flexShrink: 0,
+                          }}
+                        >
+                          {getInitials(u)}
                         </div>
-                      </td>
-                    </tr>
-                  ))
-                )}
+                        <div>
+                          <div style={{ fontWeight: 500, fontSize: "0.875rem" }}>{u.full_name || u.username || "—"}</div>
+                          <div style={{ fontSize: "0.75rem", opacity: 0.5 }}>{u.email}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{u.role || "—"}</td>
+                    <td>
+                      <span className={`${styles.badge} ${u.is_active ? styles.badgeSuccess : styles.badgeDanger}`}>
+                        {u.is_active ? "Active" : "Inactive"}
+                      </span>
+                    </td>
+                    <td>
+                      <span className={`${styles.badge} ${u.is_verified ? styles.badgeSuccess : styles.badgeDefault}`}>
+                        {u.is_verified ? "Verified" : "Pending"}
+                      </span>
+                    </td>
+                    <td>{u.is_staff ? "Yes" : "No"}</td>
+                    <td>
+                      <div style={{ display: "flex", gap: "6px" }}>
+                        {!u.is_verified && (
+                          <button
+                            className={`${styles.badge} ${styles.badgePrimary}`}
+                            style={{ border: "none", cursor: "pointer", background: "#10b981" }}
+                            onClick={() => handleApprove(u.uuid)}
+                          >
+                            <FaCheck style={{ marginRight: 4 }} /> Approve
+                          </button>
+                        )}
+                        <button
+                          className={`${styles.badge} ${styles.badgeDefault}`}
+                          style={{ border: "none", cursor: "pointer" }}
+                          onClick={() => setModalUser(u)}
+                        >
+                          <FaEdit style={{ marginRight: 4 }} /> Edit
+                        </button>
+                        <button
+                          className={`${styles.badge} ${styles.badgeDanger}`}
+                          style={{ border: "none", cursor: "pointer" }}
+                          onClick={() => handleDelete(u.uuid)}
+                        >
+                          <FaTrash style={{ marginRight: 4 }} /> Delete
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         )}
 
-        {/* ── Card View ───────────────────────────────────────────── */}
-        {viewMode === "cards" && (
+        {/* ── Card view ── */}
+        {!loading && viewMode === "cards" && (
           <div className={styles.userCardGrid}>
             {users.length === 0 ? (
               <div className={styles.empty}>No users found.</div>
-            ) : (
-              users.map((u) => (
-                <div key={u.uuid} className={styles.userCard}>
-                  <div className={styles.userCardHeader}>
-                    <div
-                      className={styles.userAvatar}
-                      style={{ background: getAvatarColor(u.uuid) }}
-                    >
-                      {getInitials(u)}
-                    </div>
-                    <div className={styles.userCardActions}>
-                      <button
-                        className={styles.iconBtnSmall}
-                        onClick={() => handleOpenDrawer(u)}
-                        title="Edit user"
-                      >
-                        <FaEdit />
-                      </button>
-                      <button
-                        className={styles.iconBtnSmall}
-                        onClick={() => handleDelete(u.uuid)}
-                        title="Delete user"
-                        style={{ color: "#f87171" }}
-                      >
-                        <FaTrash />
-                      </button>
-                    </div>
+            ) : users.map(u => (
+              <div key={u.uuid} className={styles.userCard}>
+                <div className={styles.userCardHeader}>
+                  <div className={styles.userAvatar} style={{ background: getAvatarColor(u.uuid) }}>
+                    {getInitials(u)}
                   </div>
-
-                  <div className={styles.userCardBody}>
-                    <h4 className={styles.userCardName}>{u.full_name || u.username || u.email}</h4>
-                    <p className={styles.userCardEmail}>{u.email}</p>
-
-                    <div className={styles.userCardMeta}>
-                      {u.role && <span className={styles.userCardTag}>{u.role}</span>}
-                      <span className={`${styles.badge} ${u.is_active ? styles.badgeSuccess : styles.badgeDanger}`}>
-                        {u.is_active ? "Active" : "Inactive"}
-                      </span>
-                      {u.is_staff && <span className={styles.userCardStaff}>Staff</span>}
-                    </div>
+                  <div className={styles.userCardActions}>
+                    {!u.is_verified && (
+                      <button className={styles.iconBtnSmall} onClick={() => handleApprove(u.uuid)} title="Approve" style={{ color: "#10b981" }}>
+                        <FaCheck />
+                      </button>
+                    )}
+                    <button className={styles.iconBtnSmall} onClick={() => setModalUser(u)} title="Edit">
+                      <FaEdit />
+                    </button>
+                    <button className={styles.iconBtnSmall} onClick={() => handleDelete(u.uuid)} title="Delete" style={{ color: "#f87171" }}>
+                      <FaTrash />
+                    </button>
                   </div>
                 </div>
-              ))
-            )}
+                <div className={styles.userCardBody}>
+                  <h4 className={styles.userCardName}>{u.full_name || u.username || u.email}</h4>
+                  <p className={styles.userCardEmail}>{u.email}</p>
+                  <div className={styles.userCardMeta}>
+                    {u.role && <span className={styles.userCardTag}>{u.role}</span>}
+                    <span className={`${styles.badge} ${u.is_active ? styles.badgeSuccess : styles.badgeDanger}`}>
+                      {u.is_active ? "Active" : "Inactive"}
+                    </span>
+                    {u.is_staff && <span className={styles.userCardStaff}>Staff</span>}
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         )}
       </div>
 
-      {/* ── Drawer ────────────────────────────────────────────────── */}
-      {drawerOpen && (
-        <div className={drawerStyles.overlay} onClick={handleCloseDrawer}>
-          <div className={drawerStyles.drawer} onClick={e => e.stopPropagation()}>
-            <div className={drawerStyles.drawerHeader}>
-              <h3 className={drawerStyles.drawerTitle}>{editingUser ? "Edit User" : "New User"}</h3>
-              <button className={drawerStyles.closeBtn} onClick={handleCloseDrawer}>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            
-            <div style={{ display: 'flex', flexDirection: 'column' }}>
-              {!editingUser && (
-                <>
-                  <div className={formStyles.field}>
-                    <label>Email</label>
-                    <input type="email" value={formData.email || ""} onChange={e => setFormData({ ...formData, email: e.target.value })} />
-                  </div>
-                  <div className={formStyles.field}>
-                    <label>Password</label>
-                    <input type="password" value={formData.password || ""} onChange={e => setFormData({ ...formData, password: e.target.value })} />
-                  </div>
-                </>
-              )}
-              {editingUser && (
-                <div className={formStyles.field}>
-                  <label>Username</label>
-                  <input value={formData.username || ""} onChange={e => setFormData({ ...formData, username: e.target.value })} />
-                </div>
-              )}
-              <div className={formStyles.field}>
-                <label>First Name</label>
-                <input value={formData.first_name || ""} onChange={e => setFormData({ ...formData, first_name: e.target.value })} />
-              </div>
-              <div className={formStyles.field}>
-                <label>Last Name</label>
-                <input value={formData.last_name || ""} onChange={e => setFormData({ ...formData, last_name: e.target.value })} />
-              </div>
-              <div className={formStyles.field}>
-                <label>Role</label>
-                <select value={formData.role_uuid || ""} onChange={e => setFormData({ ...formData, role_uuid: e.target.value })}>
-                  <option value="">None</option>
-                  {roles.map(r => (
-                    <option key={r.uuid} value={r.uuid}>{r.name}</option>
-                  ))}
-                </select>
-              </div>
-              <div className={formStyles.field}>
-                <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <input type="checkbox" style={{ width: 'auto', margin: 0 }} checked={formData.is_staff || false} onChange={e => setFormData({ ...formData, is_staff: e.target.checked })} />
-                  Is Staff
-                </label>
-              </div>
-              {editingUser && (
-                <div className={formStyles.field}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                    <input type="checkbox" style={{ width: 'auto', margin: 0 }} checked={formData.is_active || false} onChange={e => setFormData({ ...formData, is_active: e.target.checked })} />
-                    Is Active
-                  </label>
-                </div>
-              )}
-              
-              <div className={formStyles.actions} style={{ marginTop: 'auto', paddingTop: '2rem' }}>
-                <button className={formStyles.saveBtn} style={{ width: '100%', justifyContent: 'center' }} onClick={handleSave}>
-                  Save
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+      {/* ── Modal ── */}
+      {modalUser !== undefined && (
+        <UserModal
+          user={modalUser}
+          roles={roles}
+          onClose={() => setModalUser(undefined)}
+          onSave={handleSave}
+        />
       )}
     </div>
   );

@@ -9,7 +9,7 @@ export const updatePermission = (uuid, data) => patch(RBAC.PERMISSION_DETAIL(uui
 export const deletePermission = (uuid) => del(RBAC.PERMISSION_DETAIL(uuid), adminJwtClient);
 
 // Roles
-export const listRoles  = () => get(RBAC.ROLES, {}, adminJwtClient);
+export const listRoles  = (params = {}) => get(RBAC.ROLES, params, adminJwtClient);
 export const createRole = (data) => post(RBAC.ROLES, data, adminJwtClient);
 export const getRole    = (uuid) => get(RBAC.ROLE_DETAIL(uuid), {}, adminJwtClient);
 export const updateRole = (uuid, data) => patch(RBAC.ROLE_DETAIL(uuid), data, adminJwtClient);

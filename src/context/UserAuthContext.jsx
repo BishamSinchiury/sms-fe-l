@@ -9,7 +9,7 @@ const UserAuthContext = createContext(null);
 export const useUserAuth = () => useContext(UserAuthContext);
 
 export const UserAuthProvider = () => {
-  const [user, setUser]           = useState(null);
+  const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -21,11 +21,13 @@ export const UserAuthProvider = () => {
         // Refresh only returns access token — extract user from claims
         const claims = getTokenClaims(res.data.access)
         setUser({
-          uuid:       claims.user_uuid,
-          email:      claims.email,
-          username:   claims.username,
-          isAdmin:    claims.is_admin,
+          uuid: claims.user_uuid,
+          email: claims.email,
+          username: claims.username,
+          isAdmin: claims.is_admin,
           isSysadmin: claims.is_sysadmin,
+          isVerified: claims.is_verified,
+          status: claims.status,
         })
       } catch {
         setUser(null)
@@ -43,7 +45,17 @@ export const UserAuthProvider = () => {
       { withCredentials: true }
     )
     setUserAccessToken(res.data.access)
-    setUser(res.data.user)
+
+    const userData = res.data.user;
+    setUser({
+      uuid: userData.uuid || userData.user_uuid,
+      email: userData.email,
+      username: userData.username,
+      isAdmin: userData.is_admin,
+      isSysadmin: userData.is_sysadmin,
+      isVerified: userData.is_verified,
+      status: userData.status,
+    })
   }
 
   const logout = async () => {

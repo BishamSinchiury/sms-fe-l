@@ -29,13 +29,14 @@ const Landing = () => {
       <div className={styles.stateScreen}>
         <FaTriangleExclamation className={styles.errorIcon} />
         <p>{error}</p>
+        <p>Please Contact Software Provider</p>
       </div>
     );
   }
 
   // Build address line from individual fields — no direct `address` field in API
   const addressParts = [org?.city, org?.district, org?.province, org?.country].filter(Boolean);
-  const addressLine  = addressParts.length ? addressParts.join(", ") : "Address";
+  const addressLine = addressParts.length ? addressParts.join(", ") : "Address";
 
   return (
     <div className={styles.page}>
