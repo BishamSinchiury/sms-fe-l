@@ -12,13 +12,13 @@
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
 }
 .cardTitle {
-  font-size: 0.97rem;
+  font-size: 1.2rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.88);
   margin: 0;
 }
 .cardSub {
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.3);
   margin: 3px 0 0;
 }
@@ -29,10 +29,10 @@
   background: #4f46e5;
   border: none;
   color: #fff;
-  padding: 0.42rem 0.9rem;
+  padding: 0.5rem 1rem;
   border-radius: 7px;
   cursor: pointer;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   font-weight: 500;
   transition: background 0.15s;
 }
@@ -65,8 +65,8 @@
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 7px;
   color: rgba(255, 255, 255, 0.8);
-  padding: 0.4rem 2rem 0.4rem 2rem;
-  font-size: 0.81rem;
+  padding: 0.5rem 2.2rem 0.5rem 2.2rem;
+  font-size: 0.95rem;
   outline: none;
 }
 .searchInput:focus { border-color: rgba(99, 102, 241, 0.4); }
@@ -82,8 +82,8 @@
   border: 1px solid rgba(255, 255, 255, 0.09);
   border-radius: 7px;
   color: rgba(255, 255, 255, 0.65);
-  padding: 0.4rem 0.7rem;
-  font-size: 0.78rem;
+  padding: 0.5rem 0.9rem;
+  font-size: 0.95rem;
   outline: none;
   cursor: pointer;
   white-space: nowrap;
@@ -94,19 +94,19 @@
 .loading {
   padding: 2.5rem;
   text-align: center;
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.3);
 }
 .tableWrap { overflow-x: auto; }
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.81rem;
+  font-size: 0.95rem;
 }
 .table thead th {
-  padding: 0.55rem 1rem;
+  padding: 0.65rem 1rem;
   text-align: left;
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 500;
   color: rgba(255, 255, 255, 0.35);
   text-transform: uppercase;
@@ -126,7 +126,7 @@
   text-align: center;
   color: rgba(255, 255, 255, 0.2);
   padding: 2.5rem !important;
-  font-size: 0.82rem;
+  font-size: 0.95rem;
 }
 .nameCell  { color: rgba(255, 255, 255, 0.88) !important; font-weight: 500; }
 
@@ -134,9 +134,9 @@
   background: rgba(99, 102, 241, 0.1);
   border: 1px solid rgba(99, 102, 241, 0.2);
   color: #a5b4fc;
-  padding: 2px 8px;
+  padding: 4px 10px;
   border-radius: 5px;
-  font-size: 0.73rem;
+  font-size: 0.85rem;
   white-space: nowrap;
   margin-right: 4px;
   display: inline-block;
@@ -145,34 +145,34 @@
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.4);
-  padding: 2px 8px;
+  padding: 4px 10px;
   border-radius: 5px;
-  font-size: 0.73rem;
+  font-size: 0.85rem;
   white-space: nowrap;
 }
 .countBadge {
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.6);
 }
 .countCap {
   color: rgba(255, 255, 255, 0.25);
-  font-size: 0.72rem;
+  font-size: 0.85rem;
 }
 .badgeActive {
   background: rgba(110, 231, 183, 0.1);
   border: 1px solid rgba(110, 231, 183, 0.2);
   color: #6ee7b7;
-  padding: 2px 8px;
+  padding: 4px 10px;
   border-radius: 5px;
-  font-size: 0.72rem;
+  font-size: 0.85rem;
 }
 .badgeInactive {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.3);
-  padding: 2px 8px;
+  padding: 4px 10px;
   border-radius: 5px;
-  font-size: 0.72rem;
+  font-size: 0.85rem;
 }
 .actions { display: flex; gap: 6px; }
 .editBtn {
@@ -182,10 +182,10 @@
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.6);
-  padding: 0.28rem 0.65rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   transition: background 0.15s, color 0.15s;
 }
 .editBtn:hover {

@@ -53,7 +53,7 @@
 
 .brandTag {
   color: rgba(255, 255, 255, 0.32);
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   margin-top: 1px;
   letter-spacing: 0.01em;
 }
@@ -71,7 +71,7 @@
 
 .navSection {
   color: rgba(255, 255, 255, 0.22);
-  font-size: 0.63rem;
+  font-size: 0.95remrem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.09em;
@@ -155,7 +155,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   flex-shrink: 0;
   border: 1px solid rgba(99, 102, 241, 0.3);
 }
@@ -168,7 +168,7 @@
 
 .userName {
   color: rgba(255, 255, 255, 0.82);
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -177,7 +177,7 @@
 
 .userRole {
   color: rgba(255, 255, 255, 0.32);
-  font-size: 0.71rem;
+  font-size: 0.86remrem;
   margin-top: 1px;
 }
 
@@ -190,7 +190,7 @@
   background: transparent;
   color: rgba(220, 38, 38, 0.7);
   border-radius: 7px;
-  font-size: 0.84rem;
+  font-size: 0.95remrem;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.15s, border-color 0.15s, color 0.15s;

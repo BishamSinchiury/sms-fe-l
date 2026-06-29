@@ -24,7 +24,7 @@
 }
 
 .cardSubtitle {
-  font-size: 0.77rem;
+  font-size: 0.92remrem;
   color: rgba(255, 255, 255, 0.35);
   margin-top: 3px;
   font-weight: 400;
@@ -41,7 +41,7 @@
   color: #fff;
   border: none;
   border-radius: 7px;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.15s, transform 0.1s;
@@ -90,7 +90,7 @@
 
 .searchIcon {
   color: rgba(255, 255, 255, 0.28);
-  font-size: 0.78rem;
+  font-size: 0.95rem;
   flex-shrink: 0;
 }
 
@@ -100,7 +100,7 @@
   border: none;
   outline: none;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.83rem;
+  font-size: 1rem;
   min-width: 0;
 }
 
@@ -116,7 +116,7 @@
   padding: 0;
   display: flex;
   align-items: center;
-  font-size: 0.78rem;
+  font-size: 0.95rem;
   transition: color 0.15s;
 }
 
@@ -130,7 +130,7 @@
   border-radius: 8px;
   padding: 0.5rem 0.7rem;
   color: rgba(255, 255, 255, 0.7);
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   outline: none;
   cursor: pointer;
   transition: border-color 0.15s;
@@ -155,7 +155,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.845rem;
+  font-size: 0.95remrem;
 }
 
 .table thead tr {
@@ -165,7 +165,7 @@
 .table thead th {
   padding: 0.65rem 1.25rem;
   text-align: left;
-  font-size: 0.69rem;
+  font-size: 0.95remremrem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.07em;
@@ -207,7 +207,7 @@
   gap: 0.3rem;
   padding: 0.32rem 0.65rem;
   border-radius: 6px;
-  font-size: 0.76rem;
+  font-size: 0.9rem;
   font-weight: 500;
   cursor: pointer;
   transition: all 0.15s;
@@ -243,9 +243,9 @@
 .badge {
   display: inline-flex;
   align-items: center;
-  padding: 0.28rem 0.65rem;
+  padding: 0.4rem 0.8rem;
   border-radius: 5px;
-  font-size: 0.73rem;
+  font-size: 0.85rem;
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
@@ -329,7 +329,7 @@
   border: none;
   outline: none;
   color: rgba(255, 255, 255, 0.78);
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   min-width: 0;
   cursor: text;
 }
@@ -340,7 +340,7 @@
 
 .comboChevron {
   color: rgba(255, 255, 255, 0.3);
-  font-size: 0.75rem;
+  font-size: 0.9rem;
   flex-shrink: 0;
   pointer-events: none;
 }
@@ -386,9 +386,9 @@
 }
 
 .comboOption {
-  padding: 0.48rem 0.75rem;
+  padding: 0.6rem 0.75rem;
   border-radius: 5px;
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.65);
   cursor: pointer;
   transition: background 0.1s, color 0.1s;
@@ -407,7 +407,7 @@
 
 .comboNoResults {
   padding: 0.7rem 0.75rem;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.25);
   text-align: center;
 }

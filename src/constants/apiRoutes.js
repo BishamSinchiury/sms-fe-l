@@ -75,11 +75,15 @@ export const RBAC = {
 };
 
 export const STUDENT = {
-  LIST: "/students/",
-  DETAIL: (uuid) => `/students/${uuid}/`,
-  CLAIMS: "/students/claims/",
-  CLAIM_APPROVE: (uuid) => `/students/claims/${uuid}/approve/`,
-  CLAIM_REJECT: (uuid) => `/students/claims/${uuid}/reject/`,
+  LIST:   "/students/students/",
+  CREATE: "/students/students/create/",
+  DETAIL: (id) => `/students/students/${id}/`,
+  // Enrollments
+  ENROLLMENTS:      "/students/enrollments/",
+  ENROLLMENT_DETAIL: (id) => `/students/enrollments/${id}/`,
+  // Subject selections
+  SUBJECT_SELECTIONS:       "/students/subject-selections/",
+  SUBJECT_SELECTION_DETAIL: (id) => `/students/subject-selections/${id}/`,
 };
 
 // ─── Academics ────────────────────────────────────────────────────────────────────

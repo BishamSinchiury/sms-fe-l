@@ -62,7 +62,7 @@
 @media (max-width: 768px) {
   .button {
     min-width: 80px;
-    padding: 0.55rem 1rem;
+    padding: 0.65rem 1rem;
     font-size: 0.875rem;
   }
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useUserAuth } from "@/context/UserAuthContext";
 import { useOrg } from "@/context/OrgContext";
 import AcademicSection from "./sections/Academics/AcademicSection";
-import StudentSection from "./sections/StudentSection";
+import Students from "@/components/WebApp/Dashboard/Students/Students";
 import styles from "./Dashboard.module.css";
 import {
   FiHome, FiBook, FiCalendar, FiUsers, FiBarChart2,
@@ -36,7 +36,7 @@ const Dashboard = () => {
       case "academics":
         return <AcademicSection />;
       case "students":
-        return <StudentSection />;
+        return <Students orgId={org?.id} />;
       default:
         return null;
     }

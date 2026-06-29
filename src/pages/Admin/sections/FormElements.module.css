@@ -12,7 +12,7 @@
 
 .field label {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   font-weight: 500;
   display: flex;
   align-items: center;
@@ -52,7 +52,7 @@
 
 .fieldError {
   margin: 0.3rem 0 0;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   color: #dc2626;
 }
 
@@ -278,7 +278,7 @@
 }
 
 .modalSub {
-  font-size: 0.78rem;
+  font-size: 0.95rem;
   color: rgba(255, 255, 255, 0.4);
   margin: 0;
 }
@@ -338,7 +338,7 @@
 }
 
 .detailCellLabel {
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -357,7 +357,7 @@
   border: 1px solid rgba(255, 255, 255, 0.07);
   border-radius: 8px;
   padding: 0.85rem 1rem;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.7);
   overflow-x: auto;
@@ -398,7 +398,7 @@
 
 .infoLabel {
   color: rgba(255, 255, 255, 0.4);
-  font-size: 0.72rem;
+  font-size: 0.85rem;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -440,7 +440,7 @@
   color: #fff;
   border-radius: 8px;
   padding: 0.5rem 0.9rem;
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.15s;
@@ -470,7 +470,7 @@
 
 .mapField label {
   color: rgba(255, 255, 255, 0.6);
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   font-weight: 500;
   display: flex;
   align-items: center;
